@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, buttonVariants } from "../ui/button";
 import useUser from "@/store/useUser";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import type { JSX } from "react";
 
 type Option = {
