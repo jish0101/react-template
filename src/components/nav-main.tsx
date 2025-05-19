@@ -35,16 +35,14 @@ interface NavMainProps {
 
 export function NavMain({ items }: NavMainProps) {
   const location = useLocation();
-  console.log("🚀 ~ NavMain ~ location:", location);
 
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
-          <>
+          <div key={item.title}>
             {item.items ? (
               <Collapsible
-                key={item.title}
                 asChild
                 defaultOpen={item.isActive}
                 className="group/collapsible"
@@ -82,7 +80,7 @@ export function NavMain({ items }: NavMainProps) {
                 </SidebarMenuItem>
               </Collapsible>
             ) : (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem>
                 <SidebarMenuButton
                   className="space-x-2"
                   tooltip={item.title}
@@ -100,7 +98,7 @@ export function NavMain({ items }: NavMainProps) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )}
-          </>
+          </div>
         ))}
       </SidebarMenu>
     </SidebarGroup>
