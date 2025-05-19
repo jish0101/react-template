@@ -123,7 +123,7 @@ const TablePagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-between p-2">
+    <div className="flex flex-col md:flex-row gap-4 items-center justify-between p-2">
       <div className="flex gap-2 items-center text-sm">
         <p>
           Total {total} {item || "Records"}

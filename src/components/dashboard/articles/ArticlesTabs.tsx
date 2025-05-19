@@ -11,7 +11,7 @@ const ArticlesTabs = () => {
 
   return (
     <Tabs defaultValue={tabsLinks[1]}>
-      <TabsList>
+      <TabsList className="flex-wrap">
         <TabsTrigger value={tabsLinks[1]}>
           <Link to={tabsLinks[1]}>Generated Articles</Link>
         </TabsTrigger>

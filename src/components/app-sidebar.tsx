@@ -27,7 +27,7 @@ const data = {
       items: [
         {
           title: "Create Article",
-          url: "",
+          url: "/dashboard/articles/create-article",
         },
         {
           title: "Generated Articles",
@@ -35,35 +35,35 @@ const data = {
         },
         {
           title: "Keyword Projects",
-          url: "#",
+          url: "/dashboard/articles/keyword-projects",
         },
         {
           title: "AI Keyword to Article",
-          url: "#",
+          url: "/dashboard/articles/ai-keyword-article",
         },
         {
           title: "Steal Comptetitor Keyword",
-          url: "#",
+          url: "/dashboard/articles/steal-comptetitor-keyword",
         },
         {
           title: "Import Keyword from GSC",
-          url: "#",
+          url: "/dashboard/articles/import-keyword-gsc",
         },
         {
           title: "Manual Keyword to Article",
-          url: "#",
+          url: "/dashboard/articles/manual-keyword-article",
         },
         {
           title: "Bulk Keyword to Article",
-          url: "#",
+          url: "/dashboard/articles/bulk-keyword-article",
         },
         {
           title: "Longtail Keyword to Article",
-          url: "#",
+          url: "/dashboard/articles/longtail-keyword-article",
         },
         {
           title: "Article Settings",
-          url: "#",
+          url: "/dashboard/articles/article-settings",
         },
       ],
     },

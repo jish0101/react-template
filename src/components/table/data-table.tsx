@@ -13,13 +13,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ArrowUpDown } from "lucide-react";
 
 type DataTableProps<T> = {
   columns: ColumnDef<T>[];
   data: T[];
+  sortBy: string;
+  onSortChange: (columnId: string) => void;
 };
 
-const DataTable = <T extends unknown>({ columns, data }: DataTableProps<T>) => {
+const DataTable = <T extends unknown>({
+  columns,
+  data,
+  sortBy,
+  onSortChange,
+}: DataTableProps<T>) => {
   const table = useReactTable({
     data,
     columns,
@@ -34,19 +42,41 @@ const DataTable = <T extends unknown>({ columns, data }: DataTableProps<T>) => {
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+              {headerGroup.headers.map((header) => {
+                const columnId = header.column.id;
+                const isSorted = sortBy === columnId;
+                return (
+                  <TableHead
+                    key={header.id}
+                    onClick={() =>
+                      header.column.getCanSort() && onSortChange(columnId)
+                    }
+                    className={
+                      header.column.getCanSort()
+                        ? "cursor-pointer select-none"
+                        : ""
+                    }
+                  >
+                    <div className="flex items-center gap-1">
+                      {isSorted && (
+                        <span>
+                          <ArrowUpDown size={16} />
+                        </span>
                       )}
-                </TableHead>
-              ))}
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </div>
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
+
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (

@@ -16,6 +16,7 @@ type SearchFilters = {
 
 const GenerateArticles = () => {
   // I use reat-query for a serious app.
+  // Since i do filters and sorting on api level so i have handle it here manually.
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     query: "",
     order: "desc",
@@ -34,29 +35,35 @@ const GenerateArticles = () => {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => (
-        <div className="font-medium max-w-[400px]">
+        <div className="font-medium max-w-[400px] min-w-[150px]">
           <p className="text-wrap">{row.getValue("title") as string}</p>
         </div>
       ),
     },
     {
-      id: "keywordTraffic",
+      id: "traffic",
+      accessorKey: "traffic",
       header: "Keyword [Traffic]",
+      enableSorting: true,
       cell: ({ row }) => {
         const keyword = row.original.keyword;
         const traffic = row.original.traffic;
         return (
           <div className="font-medium">
-            {keyword} [{traffic.toLocaleString()}]
+            <p className="text-wrap min-w-[125px]">
+              {keyword} [{traffic.toLocaleString()}]
+            </p>
           </div>
         );
       },
     },
     {
+      id: "words",
       accessorKey: "words",
+      enableSorting: true,
       header: "Words",
       cell: ({ row }) => (
-        <div className="font-medium">
+        <div className="font-medium min-w-[100px]">
           {(row.getValue("words") as number).toLocaleString()}
         </div>
       ),
@@ -66,7 +73,7 @@ const GenerateArticles = () => {
       header: "Created On",
       cell: ({ row }) => {
         const value = row.getValue("createdOn") as string | null;
-        return <div className="font-medium">{value || "—"}</div>;
+        return <div className="font-medium min-w-[100px]">{value || "—"}</div>;
       },
     },
     {
@@ -76,7 +83,7 @@ const GenerateArticles = () => {
         return (
           <Button
             variant="outline"
-            className="border-green-400 text-green-400 px-8"
+            className="border-green-400 text-green-400 lg:px-8"
             onClick={() => {
               console.log("Publish clicked for:", row.original.title);
             }}
@@ -105,6 +112,14 @@ const GenerateArticles = () => {
     },
   ];
 
+  const onSortChange = (columnId: string) => {
+    setSearchFilters((prev) => ({
+      ...prev,
+      sortBy: columnId as SearchFilters["sortBy"],
+      order: prev.sortBy === columnId && prev.order === "desc" ? "asc" : "desc",
+    }));
+  };
+
   useEffect(() => {
     (async () => {
       const { data, total } = await getData({
@@ -130,7 +145,13 @@ const GenerateArticles = () => {
           setSearchFilters({ ...searchFilters, query: e.target.value })
         }
       />
-      <DataTable data={articles || []} columns={columns} />
+      <DataTable
+        data={articles || []}
+        columns={columns}
+        onSortChange={onSortChange}
+        sortBy={searchFilters.sortBy}
+      />
+
       <TablePagination
         total={pagination.total}
         pageSize={pagination.limit}
